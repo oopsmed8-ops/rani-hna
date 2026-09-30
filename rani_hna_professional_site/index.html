@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#06111f">
+  <meta name="description" content="Rani Hna — منصة رقمية تجمع التسوق، الصيانة، التوصيل، الدفع، شحن الرصيد، التقسيط والتواصل في تجربة واحدة.">
+  <title>Rani Hna — كل شيء أقرب إليك</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#040a12;
+      --bg2:#071522;
+      --surface:rgba(10,22,36,.72);
+      --surface2:rgba(15,31,49,.78);
+      --line:rgba(166,220,255,.12);
+      --text:#f4f9ff;
+      --muted:#8ea4ba;
+      --cyan:#19d9ff;
+      --blue:#2e7dff;
+      --lime:#b6ff35;
+      --green:#2ee58a;
+      --pink:#ff4fa3;
+      --orange:#ff9c45;
+      --shadow:0 28px 90px rgba(0,0,0,.38);
+      --radius:28px;
+      --max:1220px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      background:
+        radial-gradient(circle at 15% 10%, rgba(25,217,255,.10), transparent 26%),
+        radial-gradient(circle at 85% 14%, rgba(182,255,53,.08), transparent 24%),
+        linear-gradient(180deg,var(--bg),#06111d 52%,#03080e);
+      color:var(--text);
+      font-family:"Cairo",sans-serif;
+      overflow-x:hidden;
+    }
+    body:before{
+      content:"";
+      position:fixed; inset:0; pointer-events:none; z-index:-1;
+      background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
+                       linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
+      background-size:60px 60px;
+      mask-image:linear-gradient(to bottom,rgba(0,0,0,.75),transparent 90%);
+    }
+    a{color:inherit;text-decoration:none}
+    button{font:inherit}
+    .wrap{width:min(var(--max),calc(100% - 40px));margin:auto}
+    .mono{font-family:"IBM Plex Mono",monospace}
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:9px;
+      color:#b9d7ed;font-size:12px;font-weight:800;letter-spacing:.08em;
+      text-transform:uppercase;
+      padding:9px 13px;border:1px solid var(--line);border-radius:999px;
+      background:rgba(255,255,255,.025);backdrop-filter:blur(12px)
+    }
+    .eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 16px var(--lime)}
+    .section{padding:105px 0;position:relative}
+    .section-head{max-width:760px;margin-bottom:42px}
+    .section-head h2{font-size:clamp(32px,5vw,62px);line-height:1.05;margin:18px 0 15px;letter-spacing:-.035em}
+    .section-head p{margin:0;color:var(--muted);font-size:17px;line-height:1.95}
+    .nav{
+      position:fixed;top:15px;left:50%;transform:translateX(-50%);
+      width:min(1160px,calc(100% - 28px));z-index:50;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:10px 12px 10px 16px;border:1px solid var(--line);
+      background:rgba(4,12,21,.72);backdrop-filter:blur(22px);
+      border-radius:20px;box-shadow:0 16px 50px rgba(0,0,0,.24)
+    }
+    .brand{display:flex;align-items:center;gap:11px;font-weight:900}
+    .brand img{width:39px;height:39px;object-fit:cover;border-radius:13px;box-shadow:0 0 26px rgba(25,217,255,.22)}
+    .brand span{font-size:16px}
+    .navlinks{display:flex;gap:4px}
+    .navlinks a{padding:9px 12px;border-radius:12px;color:#9db1c4;font-size:13px;font-weight:700;transition:.25s}
+    .navlinks a:hover{background:rgba(255,255,255,.06);color:white}
+    .nav-cta{padding:10px 15px;border-radius:13px;background:linear-gradient(135deg,var(--cyan),var(--blue));color:#02101b;font-weight:900;font-size:13px}
+    .menu{display:none;border:0;background:transparent;color:white;font-size:25px}
+    .hero{min-height:100vh;padding-top:150px;display:flex;align-items:center;overflow:hidden}
+    .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:70px;align-items:center}
+    .hero-copy h1{font-size:clamp(52px,8vw,106px);line-height:.98;letter-spacing:-.065em;margin:23px 0}
+    .gradient{background:linear-gradient(100deg,#fff 10%,#9ceeff 42%,#aaff36 88%);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .hero-copy .lead{font-size:19px;line-height:1.95;color:#a7b9c9;max-width:650px}
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 19px;border-radius:15px;font-weight:900;font-size:14px;border:1px solid var(--line);transition:.3s;cursor:pointer}
+    .btn.primary{background:linear-gradient(135deg,var(--cyan),var(--blue));color:#03111d;border:0;box-shadow:0 16px 38px rgba(25,217,255,.17)}
+    .btn.ghost{background:rgba(255,255,255,.035);color:white}
+    .btn:hover{transform:translateY(-3px)}
+    .hero-meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:30px}
+    .chip{padding:8px 11px;border:1px solid var(--line);border-radius:999px;color:#91a9bc;background:rgba(255,255,255,.025);font-size:12px}
+    .showcase{position:relative;min-height:590px;display:grid;place-items:center}
+    .orb{position:absolute;border-radius:50%;filter:blur(2px);opacity:.65}
+    .orb.one{width:330px;height:330px;background:radial-gradient(circle,rgba(25,217,255,.3),transparent 68%);top:5%;right:5%}
+    .orb.two{width:300px;height:300px;background:radial-gradient(circle,rgba(182,255,53,.19),transparent 68%);bottom:2%;left:0}
+    .phone{
+      width:min(330px,76vw);height:625px;border:8px solid #0d1c2d;border-radius:43px;
+      background:#06101b;box-shadow:0 35px 100px rgba(0,0,0,.65),0 0 0 1px rgba(255,255,255,.1);
+      overflow:hidden;position:relative;transform:rotate(-4deg);transition:transform .5s
+    }
+    .showcase:hover .phone{transform:rotate(0deg) translateY(-8px)}
+    .phone:after{content:"";position:absolute;inset:0;border:1px solid rgba(255,255,255,.08);border-radius:36px;pointer-events:none}
+    .phone-top{height:30px;display:flex;justify-content:center;align-items:center}
+    .notch{width:95px;height:18px;border-radius:0 0 14px 14px;background:#02070c}
+    .phone-screen{height:calc(100% - 30px);padding:14px;background-size:cover;background-position:center;position:relative;transition:background-image .6s}
+    .phone-screen:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(2,8,14,.18),rgba(2,8,14,.86))}
+    .phone-content{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;justify-content:space-between}
+    .mini-top{display:flex;justify-content:space-between;align-items:center}
+    .mini-logo{width:37px;height:37px;border-radius:12px;object-fit:cover}
+    .mini-pill{padding:7px 10px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.15);border-radius:999px;font-size:10px}
+    .mini-copy h3{font-size:27px;line-height:1.15;margin:0 0 8px}
+    .mini-copy p{font-size:11px;line-height:1.8;color:#d1e1ef;margin:0}
+    .mini-dots{display:flex;gap:6px;margin-top:16px}
+    .mini-dots i{width:6px;height:6px;border-radius:50%;background:#ffffff55}
+    .mini-dots i.active{width:21px;border-radius:9px;background:var(--cyan)}
+    .mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+    .mini-tile{padding:11px 6px;text-align:center;background:rgba(4,13,23,.58);border:1px solid rgba(255,255,255,.1);border-radius:14px;font-size:9px}
+    .mini-tile b{display:block;font-size:16px;margin-bottom:3px}
+    .float-card{position:absolute;padding:14px 16px;border-radius:18px;border:1px solid var(--line);background:rgba(8,20,33,.78);backdrop-filter:blur(18px);box-shadow:var(--shadow);font-size:12px}
+    .float-card strong{display:block;font-size:16px;margin-bottom:2px}
+    .float-a{right:-18px;top:18%}.float-b{left:-15px;bottom:17%}.float-c{right:4%;bottom:4%}
+    .ticker{padding:13px 0;border-block:1px solid var(--line);overflow:hidden;background:rgba(255,255,255,.018)}
+    .ticker-track{display:flex;width:max-content;gap:34px;animation:marquee 25s linear infinite;color:#7f98ad;font-size:12px;font-weight:800}
+    .ticker-track b{color:#d7f4ff}
+    @keyframes marquee{to{transform:translateX(-50%)}}
+    .feature-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .feature{min-height:220px;padding:23px;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(145deg,rgba(16,32,50,.72),rgba(6,15,25,.8));position:relative;overflow:hidden;transition:.35s}
+    .feature:hover{transform:translateY(-7px);border-color:rgba(25,217,255,.35);box-shadow:0 22px 55px rgba(0,0,0,.25)}
+    .feature:after{content:"";position:absolute;width:140px;height:140px;border-radius:50%;right:-50px;bottom:-60px;background:var(--glow);filter:blur(30px);opacity:.16}
+    .icon{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:rgba(255,255,255,.06);font-size:23px;margin-bottom:28px}
+    .feature h3{margin:0 0 8px;font-size:19px}.feature p{margin:0;color:var(--muted);line-height:1.8;font-size:13px}
+    .feature .tag{position:absolute;top:18px;left:18px;font-size:10px;color:#7891a7}
+    .feature.active{outline:1px solid rgba(25,217,255,.5);background:linear-gradient(145deg,rgba(21,50,74,.82),rgba(7,17,29,.9))}
+    .explorer{display:grid;grid-template-columns:.8fr 1.2fr;gap:18px}
+    .explore-menu,.explore-view{border:1px solid var(--line);border-radius:var(--radius);background:rgba(7,17,29,.7);box-shadow:var(--shadow)}
+    .explore-menu{padding:12px;display:flex;flex-direction:column;gap:6px}
+    .explore-btn{border:0;text-align:right;padding:16px;border-radius:17px;background:transparent;color:#8ea4ba;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:.25s}
+    .explore-btn span:first-child{font-weight:800;color:inherit}.explore-btn small{font-family:"IBM Plex Mono";opacity:.55}
+    .explore-btn:hover,.explore-btn.active{background:rgba(255,255,255,.055);color:white}
+    .explore-view{padding:32px;min-height:420px;position:relative;overflow:hidden}
+    .explore-view:before{content:"";position:absolute;width:250px;height:250px;border-radius:50%;background:radial-gradient(circle,var(--cyan),transparent 70%);opacity:.08;left:-80px;bottom:-90px}
+    .view-kicker{font-family:"IBM Plex Mono";color:var(--cyan);font-size:11px}
+    .view-title{font-size:38px;margin:12px 0 10px}
+    .view-desc{color:var(--muted);line-height:1.95;max-width:690px}
+    .view-points{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:24px}
+    .point{padding:14px;border:1px solid var(--line);border-radius:15px;background:rgba(255,255,255,.025);color:#b7c7d6;font-size:13px}
+    .point b{color:white;display:block;margin-bottom:5px}
+    .journey{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+    .step{padding:22px 18px;border:1px solid var(--line);border-radius:23px;background:rgba(255,255,255,.025);position:relative}
+    .step .num{font-family:"IBM Plex Mono";color:var(--cyan);font-size:11px}
+    .step h3{font-size:17px;margin:18px 0 7px}.step p{font-size:12px;color:var(--muted);line-height:1.8;margin:0}
+    .step:not(:last-child):after{content:"←";position:absolute;left:-17px;top:50%;color:#4f6b80;font-size:20px}
+    .tech{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .tech-card{padding:30px;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(145deg,rgba(13,29,47,.8),rgba(5,13,22,.8))}
+    .tech-card h3{font-size:25px;margin:0 0 10px}.tech-card>p{color:var(--muted);line-height:1.9;font-size:14px}
+    .stack{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}.stack span{font-family:"IBM Plex Mono";font-size:11px;padding:8px 10px;border-radius:10px;background:rgba(255,255,255,.045);border:1px solid var(--line);color:#b5c7d7}
+    .architecture{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:20px}
+    .arch{padding:18px;border-radius:18px;background:#07121f;border:1px solid var(--line);min-height:150px}
+    .arch .line{width:35px;height:3px;background:var(--cyan);border-radius:9px;margin-bottom:22px}.arch:nth-child(2) .line{background:var(--green)}.arch:nth-child(3) .line{background:var(--orange)}.arch:nth-child(4) .line{background:var(--pink)}
+    .arch h4{margin:0 0 8px}.arch p{margin:0;color:var(--muted);font-size:12px;line-height:1.8}
+    .team{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .person{padding:30px;border-radius:var(--radius);border:1px solid var(--line);background:linear-gradient(145deg,rgba(15,32,51,.84),rgba(5,13,22,.88));position:relative;overflow:hidden}
+    .person:before{content:"";position:absolute;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,var(--person-glow),transparent 68%);left:-70px;bottom:-80px;opacity:.18}
+    .person-head{display:flex;align-items:center;gap:16px;margin-bottom:24px}.avatar{width:60px;height:60px;border-radius:19px;display:grid;place-items:center;font-size:24px;font-weight:900;background:rgba(255,255,255,.06);border:1px solid var(--line)}
+    .person h3{margin:0;font-size:22px}.role{color:#7f98ad;font-size:12px;margin-top:3px}
+    .responsibilities{display:grid;gap:8px}.responsibilities div{padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06);color:#b8c9d8;font-size:13px}
+    .responsibilities div:before{content:"✓";color:var(--lime);font-weight:900;margin-left:8px}
+    .cta{padding:80px 0 105px}
+    .cta-box{position:relative;overflow:hidden;padding:60px;border:1px solid rgba(25,217,255,.2);border-radius:36px;background:radial-gradient(circle at 85% 30%,rgba(25,217,255,.14),transparent 32%),radial-gradient(circle at 15% 70%,rgba(182,255,53,.10),transparent 30%),linear-gradient(135deg,#0a1c2c,#06101b)}
+    .cta-box h2{font-size:clamp(34px,5vw,62px);line-height:1.05;margin:0 0 15px;max-width:780px}.cta-box p{color:#8ea4ba;max-width:690px;line-height:1.9}
+    footer{border-top:1px solid var(--line);padding:30px 0;color:#71889b;font-size:12px}
+    footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+    .reveal{opacity:0;transform:translateY(22px);transition:opacity .75s ease,transform .75s ease}.reveal.visible{opacity:1;transform:none}
+    .progress{position:fixed;top:0;right:0;height:3px;width:0;background:linear-gradient(90deg,var(--lime),var(--cyan),var(--blue));z-index:100}
+    @media(max-width:980px){
+      .hero-grid,.explorer,.tech{grid-template-columns:1fr}
+      .showcase{min-height:650px}.hero-copy{text-align:center}.hero-copy .lead{margin:auto}.hero-actions,.hero-meta{justify-content:center}
+      .feature-grid{grid-template-columns:repeat(2,1fr)}
+      .journey{grid-template-columns:repeat(2,1fr)}.step:not(:last-child):after{display:none}
+      .architecture{grid-template-columns:repeat(2,1fr)}
+      .team{grid-template-columns:1fr}
+      .navlinks{display:none}.menu{display:block}
+      .nav.open .navlinks{display:flex;position:absolute;top:65px;right:0;left:0;flex-direction:column;padding:10px;background:rgba(4,12,21,.95);border:1px solid var(--line);border-radius:18px}
+    }
+    @media(max-width:620px){
+      .wrap{width:min(var(--max),calc(100% - 26px))}
+      .section{padding:75px 0}.hero{padding-top:120px}.hero-copy h1{font-size:53px}
+      .feature-grid,.journey,.architecture,.view-points{grid-template-columns:1fr}
+      .showcase{min-height:620px}.float-card{display:none}.phone{height:580px}
+      .cta-box{padding:35px 24px}
+      .nav-cta{display:none}
+      .section-head h2{font-size:39px}
+    }
+  </style>
+</head>
+<body>
+  <div class="progress" id="progress"></div>
+
+  <nav class="nav" id="nav">
+    <a class="brand" href="#top">
+      <img src="assets/logo.png" alt="Rani Hna">
+      <span>Rani Hna</span>
+    </a>
+    <div class="navlinks">
+      <a href="#about">الفكرة</a>
+      <a href="#services">الخدمات</a>
+      <a href="#experience">التجربة</a>
+      <a href="#technology">التقنية</a>
+      <a href="#team">الفريق</a>
+    </div>
+    <a class="nav-cta" href="#services">اكتشف المنصة</a>
+    <button class="menu" id="menu" aria-label="فتح القائمة">☰</button>
+  </nav>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div class="hero-copy reveal">
+          <span class="eyebrow"><i></i> منصة رقمية متعددة الخدمات</span>
+          <h1>كل شيء أقرب.<br><span class="gradient">Rani Hna.</span></h1>
+          <p class="lead">
+            تطبيق يجمع احتياجاتك اليومية في تجربة واحدة: تسوّق، أصلح، اشحن، أرسل، ادفع، قسّط وتواصل — من مكان واحد وبواجهة مصممة لتكون عملية وواضحة.
+          </p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#services">استكشف ماذا يفعل التطبيق ↗</a>
+            <a class="btn ghost" href="#technology">انظر تحت الغطاء</a>
+          </div>
+          <div class="hero-meta">
+            <span class="chip">Flutter</span>
+            <span class="chip">REST API</span>
+            <span class="chip">E-Commerce</span>
+            <span class="chip">Social & Chat</span>
+            <span class="chip">Admin Dashboard</span>
+          </div>
+        </div>
+
+        <div class="showcase reveal">
+          <div class="orb one"></div><div class="orb two"></div>
+          <div class="phone" id="phone">
+            <div class="phone-top"><div class="notch"></div></div>
+            <div class="phone-screen" id="phoneScreen">
+              <div class="phone-content">
+                <div class="mini-top">
+                  <img class="mini-logo" src="assets/logo.png" alt="">
+                  <span class="mini-pill" id="miniLabel">01 / 05</span>
+                </div>
+                <div class="mini-copy">
+                  <h3 id="miniTitle">تسوّق أدواتك الإلكترونية</h3>
+                  <p id="miniDesc">منتجات وإكسسوارات، مع تجربة شراء منظمة وسهلة.</p>
+                  <div class="mini-dots" id="dots"></div>
+                </div>
+                <div class="mini-grid">
+                  <div class="mini-tile"><b>🛍️</b>متجر</div>
+                  <div class="mini-tile"><b>🔧</b>تصليح</div>
+                  <div class="mini-tile"><b>🚚</b>توصيل</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="float-card float-a"><strong>7 خدمات محورية</strong><span>من تجربة واحدة</span></div>
+          <div class="float-card float-b"><strong>تجربة متصلة</strong><span>طلب → متابعة → إشعارات</span></div>
+          <div class="float-card float-c"><strong>إدارة من الداخل</strong><span>منتجات · طلبات · خدمات</span></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="ticker">
+      <div class="ticker-track">
+        <span>RANI HNA</span><b>•</b><span>SHOP</span><b>•</b><span>REPAIR</span><b>•</b><span>DELIVERY</span><b>•</b><span>PAYMENT</span><b>•</b><span>FLEXY</span><b>•</b><span>INSTALLMENTS</span><b>•</b><span>SOCIAL</span><b>•</b>
+        <span>RANI HNA</span><b>•</b><span>SHOP</span><b>•</b><span>REPAIR</span><b>•</b><span>DELIVERY</span><b>•</b><span>PAYMENT</span><b>•</b><span>FLEXY</span><b>•</b><span>INSTALLMENTS</span><b>•</b><span>SOCIAL</span><b>•</b>
+      </div>
+    </div>
+
+    <section class="section" id="about">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="eyebrow"><i></i> من المشروع نفسه</span>
+          <h2>ليست فكرة تطبيق واحد…<br><span class="gradient">بل منظومة يومية.</span></h2>
+          <p>
+            بعد مراجعة بنية المشروع، تظهر الفكرة بوضوح: Rani Hna لا يضع خدمة واحدة بجانب أخرى فقط، بل يبني مسارًا موحدًا يبدأ من اكتشاف الخدمة أو المنتج، ويمتد إلى الطلب والدفع والمتابعة والتواصل.
+          </p>
+        </div>
+
+        <div class="feature-grid" id="featureGrid">
+          <article class="feature reveal" style="--glow:#19d9ff">
+            <span class="tag">01</span><div class="icon">🛍️</div>
+            <h3>المتجر</h3><p>متاجر ومنتجات، بحث وفلاتر، تفاصيل المنتج، صور متعددة، سلة، قائمة رغبات وCheckout.</p>
+          </article>
+          <article class="feature reveal" style="--glow:#2ee58a">
+            <span class="tag">02</span><div class="icon">🔧</div>
+            <h3>التصليح</h3><p>خدمات صيانة، تفاصيل وأسعار ومدد، طلب إصلاح وإرفاق وسائط مرتبطة بالخدمة أو الطلب.</p>
+          </article>
+          <article class="feature reveal" style="--glow:#45b7d1">
+            <span class="tag">03</span><div class="icon">📱</div>
+            <h3>فليكسي</h3><p>شحن رصيد الهاتف مع دعم الشبكات الجزائرية، واختيار الرقم والمبلغ ومراجعة العملية.</p>
+          </article>
+          <article class="feature reveal" style="--glow:#8e62ff">
+            <span class="tag">04</span><div class="icon">🚚</div>
+            <h3>التوصيل</h3><p>توصيل سريع أو عادي أو مجدول، مع خيارات لحجم الطرد وعناوين المرسل والمستلم وتتبع الطلب.</p>
+          </article>
+          <article class="feature reveal" style="--glow:#ff4fa3">
+            <span class="tag">05</span><div class="icon">💳</div>
+            <h3>الدفع الإلكتروني</h3><p>تدفق دفع مخصص مع حسابات استقبال وإرفاق إيصال ومراجعة الطلبات من لوحة الإدارة.</p>
+          </article>
+          <article class="feature reveal" style="--glow:#ff9c45">
+            <span class="tag">06</span><div class="icon">💰</div>
+            <h3>التقسيط</h3><p>طلب تقسيط مع خطط مرنة تصل إلى 12 شهرًا، حساب القسط الشهري ومتابعة الطلب.</p>
+          </article>
+          <article class="feature reveal" style="--glow:#b6ff35">
+            <span class="tag">07</span><div class="icon">💬</div>
+            <h3>المجتمع والتواصل</h3><p>منشورات، تفاعلات، تعليقات، هاشتاغات، استطلاعات، متابعة، محادثات وإشعارات.</p>
+          </article>
+          <article class="feature reveal" style="--glow:#19d9ff">
+            <span class="tag">08</span><div class="icon">📊</div>
+            <h3>الإدارة والتحليلات</h3><p>لوحة إدارة للطلبات والمنتجات والمتاجر والخدمات والإعلانات والمستخدمين والدفع، مع تتبع وتحليلات.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="services">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="eyebrow"><i></i> Explore the product</span>
+          <h2>حرّك المؤشر.<br><span class="gradient">وشاهد المنصة من الداخل.</span></h2>
+          <p>قسم تفاعلي يلخص أهم الوحدات التي ظهرت بوضوح في الكود: ماذا تقدم، وما الذي يحدث خلف الواجهة.</p>
+        </div>
+
+        <div class="explorer reveal">
+          <div class="explore-menu" id="exploreMenu"></div>
+          <div class="explore-view">
+            <div class="view-kicker" id="viewKicker">MODULE / 01</div>
+            <h3 class="view-title" id="viewTitle">المتجر</h3>
+            <p class="view-desc" id="viewDesc"></p>
+            <div class="view-points" id="viewPoints"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="experience">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="eyebrow"><i></i> User journey</span>
+          <h2>رحلة المستخدم<br><span class="gradient">مصممة كمسار واحد.</span></h2>
+          <p>من لحظة الدخول الأولى إلى ما بعد الطلب، توجد طبقات واضحة للتفاعل، البيانات، الحالة، الإشعارات والمتابعة.</p>
+        </div>
+        <div class="journey">
+          <div class="step reveal"><div class="num">01 / START</div><h3>اكتشاف</h3><p>Onboarding بصري يعرّف المستخدم بالتسوق والصيانة والشحن والتوصيل والدفع.</p></div>
+          <div class="step reveal"><div class="num">02 / ACTION</div><h3>اختيار</h3><p>متجر، خدمة، شحن، توصيل، دفع أو تقسيط حسب الحاجة.</p></div>
+          <div class="step reveal"><div class="num">03 / ORDER</div><h3>تنفيذ</h3><p>بيانات الطلب والسلة والكمية والعنوان والوسائط حسب نوع الخدمة.</p></div>
+          <div class="step reveal"><div class="num">04 / STATUS</div><h3>متابعة</h3><p>حالات الطلب، تتبع التوصيل، الإشعارات وسجل المدفوعات.</p></div>
+          <div class="step reveal"><div class="num">05 / CONNECT</div><h3>تواصل</h3><p>محادثات، منشورات، تعليقات، تفاعلات ومتابعة داخل البيئة نفسها.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="technology">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="eyebrow"><i></i> Under the hood</span>
+          <h2>واجهة جميلة في الأعلى.<br><span class="gradient">وهندسة حقيقية في الأسفل.</span></h2>
+          <p>المشروع المرفق مبني على Flutter، ويحتوي على طبقات واضحة للخدمات والنماذج والجلسات والتتبع وواجهات الإدارة.</p>
+        </div>
+
+        <div class="tech">
+          <div class="tech-card reveal">
+            <h3>Stack & capabilities</h3>
+            <p>الاستيرادات والبنية البرمجية توضح اعتماد المشروع على أدوات Flutter للشبكة، التخزين المحلي، الصور والفيديو، التسجيل، مشاركة المحتوى وتتبع الجهاز.</p>
+            <div class="stack">
+              <span>Flutter</span><span>Dio / HTTP</span><span>REST API</span><span>SharedPreferences</span>
+              <span>Image Picker</span><span>Video Player</span><span>File Picker</span><span>Recorder</span>
+              <span>Notifications</span><span>Analytics Tracking</span>
+            </div>
+          </div>
+          <div class="tech-card reveal">
+            <h3>Architecture map</h3>
+            <p>طبقات المشروع لا تتوقف عند الشاشات؛ هناك نماذج بيانات وخدمات مستقلة، ثم طبقة إدارة ومراقبة فوق المنظومة.</p>
+            <div class="architecture">
+              <div class="arch"><div class="line"></div><h4>Experience</h4><p>واجهات المستخدم، المتجر، الخدمات، الملف الشخصي والمجتمع.</p></div>
+              <div class="arch"><div class="line"></div><h4>Services</h4><p>Auth, Store, Cart, Orders, Repair, Delivery, Payment, Chat وغيرها.</p></div>
+              <div class="arch"><div class="line"></div><h4>Data</h4><p>Models للمنتجات والطلبات والمستخدمين والرسائل والمنشورات والخدمات.</p></div>
+              <div class="arch"><div class="line"></div><h4>Control</h4><p>إدارة المنتجات والمتاجر والطلبات والصيانة والدفع والمستخدمين والإعلانات.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="team">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="eyebrow"><i></i> The people behind it</span>
+          <h2>فكرة واحدة.<br><span class="gradient">أدوار واضحة.</span></h2>
+          <p>فريق Rani Hna يجمع بين البناء التقني، رؤية المنتج، الاختبار والتجارة الإلكترونية — بحيث يتحرك المشروع من الفكرة إلى تجربة قابلة للاستخدام.</p>
+        </div>
+
+        <div class="team">
+          <article class="person reveal" style="--person-glow:#19d9ff">
+            <div class="person-head">
+              <div class="avatar">ك</div>
+              <div><h3>كانون محمد</h3><div class="role">مطور تطبيقات ومواقع · التطوير التقني</div></div>
+            </div>
+            <div class="responsibilities">
+              <div>بناء وتطوير تجربة التطبيق والواجهات الرقمية.</div>
+              <div>تنفيذ منطق الخدمات وربط الواجهات بالـ API والبيانات.</div>
+              <div>تطوير تدفقات المتجر، الطلبات، الدفع والخدمات المساندة.</div>
+              <div>الاهتمام بالبنية التقنية، الجلسات، التتبع ولوحات الإدارة.</div>
+              <div>تحويل هوية المنتج إلى تجربة ويب احترافية وواضحة.</div>
+            </div>
+          </article>
+
+          <article class="person reveal" style="--person-glow:#b6ff35">
+            <div class="person-head">
+              <div class="avatar">أ</div>
+              <div><h3>أيمن بن موسى</h3><div class="role">صاحب فكرة المشروع · Tester · مسؤول جانب الـ E-Commerce</div></div>
+            </div>
+            <div class="responsibilities">
+              <div>تطوير وتوجيه فكرة Rani Hna كمنتج متعدد الخدمات.</div>
+              <div>اختبار التجربة واكتشاف الملاحظات والتحقق من سلوك الخصائص.</div>
+              <div>تنظيم جانب التجارة الإلكترونية: المتاجر، المنتجات والكتالوج.</div>
+              <div>متابعة رحلة الشراء والطلبات من منظور المستخدم والتجارة.</div>
+              <div>المساهمة في صقل تفاصيل المنتج قبل وصولها للمستخدم.</div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="wrap">
+        <div class="cta-box reveal">
+          <span class="eyebrow"><i></i> Rani Hna / Product Story</span>
+          <h2>من تطبيق خدمات…<br><span class="gradient">إلى تجربة لها شخصية.</span></h2>
+          <p>
+            Rani Hna يجمع بين التجارة والخدمات والتواصل في مكان واحد. وهذا الموقع ليس مجرد صفحة تعريف؛ بل واجهة تعكس الفكرة، تشرح المنظومة وتُظهر ما بُني خلفها.
+          </p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#top">العودة إلى البداية ↑</a>
+            <a class="btn ghost" href="#team">التعرف على الفريق</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>© <span id="year"></span> Rani Hna — Product Showcase</span>
+      <span class="mono">BUILT WITH INTENT · AR / RTL</span>
+    </div>
+  </footer>
+
+  <script>
+    const onboarding = [
+      {
+        title:"تسوّق أدواتك الإلكترونية",
+        desc:"منتجات وإكسسوارات، مع تجربة شراء منظمة وسهلة.",
+        img:"assets/images/bg_shopping.jpg"
+      },
+      {
+        title:"إصلاح أجهزتك باحترافية",
+        desc:"خدمات صيانة وطلبات إصلاح مع تفاصيل ووسائط مرتبطة بالخدمة.",
+        img:"assets/images/bg_repair.jpg"
+      },
+      {
+        title:"اشحن رصيد هاتفك فوراً",
+        desc:"فليكسي ودعم للشبكات الجزائرية مع اختيار الرقم والمبلغ.",
+        img:"assets/images/bg_recharge.jpg"
+      },
+      {
+        title:"توصيل سريع وموثوق",
+        desc:"سريع، عادي أو مجدول، مع خيارات للطرد وتتبع الطلب.",
+        img:"assets/images/bg_delivery.jpg"
+      },
+      {
+        title:"دفع إلكتروني آمن",
+        desc:"تدفق دفع مخصص مع حسابات استقبال وإيصالات ومراجعة.",
+        img:"assets/images/bg_payment.jpg"
+      }
+    ];
+    const phoneScreen=document.getElementById("phoneScreen");
+    const miniTitle=document.getElementById("miniTitle");
+    const miniDesc=document.getElementById("miniDesc");
+    const miniLabel=document.getElementById("miniLabel");
+    const dots=document.getElementById("dots");
+    let slide=0;
+    onboarding.forEach((_,i)=>{
+      const d=document.createElement("i");
+      if(i===0)d.className="active";
+      dots.appendChild(d);
+    });
+    function showSlide(i){
+      slide=i;
+      const s=onboarding[i];
+      phoneScreen.style.backgroundImage=`url("${s.img}")`;
+      miniTitle.textContent=s.title;
+      miniDesc.textContent=s.desc;
+      miniLabel.textContent=`0${i+1} / 05`;
+      [...dots.children].forEach((d,n)=>d.classList.toggle("active",n===i));
+    }
+    showSlide(0);
+    setInterval(()=>showSlide((slide+1)%onboarding.length),3200);
+
+    const modules=[
+      {t:"المتجر",k:"STORE / 01",d:"وحدة تجارة إلكترونية متكاملة داخل التطبيق، تبدأ من المتاجر والبحث والفلاتر وتصل إلى السلة والـCheckout وقائمة الرغبات.",p:["متاجر متعددة","منتجات وصور متعددة","بحث وفلاتر","سلة وWishlist"]},
+      {t:"التصليح",k:"REPAIR / 02",d:"تجربة مخصصة لطلبات الصيانة، مع خدمات قابلة للإدارة وأسعار ومدد ووسائط مرتبطة بالطلبات.",p:["خدمات صيانة","أسعار ومدد","طلب إصلاح","صور / فيديو / صوت / ملفات"]},
+      {t:"فليكسي",k:"FLEXY / 03",d:"مسار شحن رصيد الهاتف، مع اختيار الشبكة والرقم والمبلغ ثم تأكيد العملية ومتابعة الطلب.",p:["دعم الشبكات الجزائرية","رقم الهاتف","مبلغ مخصص","تأكيد ومتابعة"]},
+      {t:"التوصيل",k:"DELIVERY / 04",d:"خدمة توصيل لها ثلاثة أنماط واضحة، مع حساب السعر حسب نوع التوصيل وحجم الطرد وعناوين المرسل والمستلم.",p:["سريع: 60 دقيقة","عادي: 24 ساعة","مجدول","حساب السعر حسب الحجم"]},
+      {t:"الدفع",k:"PAYMENT / 05",d:"تدفق دفع إلكتروني مستقل، مع حسابات استقبال مثل BaridiMob وCCP وBinance وإمكانية إرفاق الإيصال.",p:["BaridiMob","CCP","Binance","إرفاق إيصال ومراجعة"]},
+      {t:"التقسيط",k:"INSTALLMENT / 06",d:"طلب تقسيط بمعلومات المشتريات والقيمة والخطة، مع خطط مرنة تصل إلى 12 شهرًا وحساب القسط الشهري.",p:["خطط متعددة","حتى 12 شهرًا","حساب القسط","متابعة الطلب"]},
+      {t:"المجتمع والتواصل",k:"SOCIAL / 07",d:"جانب اجتماعي داخل المنصة: منشورات وتفاعلات وتعليقات وهاشتاغات واستطلاعات ومتابعة ومحادثات.",p:["Posts & Comments","Reactions","Hashtags & Polls","Chat & Notifications"]}
+    ];
+    const menu=document.getElementById("exploreMenu");
+    const viewKicker=document.getElementById("viewKicker");
+    const viewTitle=document.getElementById("viewTitle");
+    const viewDesc=document.getElementById("viewDesc");
+    const viewPoints=document.getElementById("viewPoints");
+    function renderModule(i){
+      const m=modules[i];
+      viewKicker.textContent=m.k;
+      viewTitle.textContent=m.t;
+      viewDesc.textContent=m.d;
+      viewPoints.innerHTML=m.p.map(x=>`<div class="point"><b>${x.split(":")[0]}</b>${x.includes(":")?x.split(":").slice(1).join(":"):"جزء من تجربة الوحدة"}</div>`).join("");
+      [...menu.children].forEach((b,n)=>b.classList.toggle("active",n===i));
+    }
+    modules.forEach((m,i)=>{
+      const b=document.createElement("button");
+      b.className="explore-btn";
+      b.innerHTML=`<span>${m.t}</span><small>${String(i+1).padStart(2,"0")}</small>`;
+      b.onclick=()=>renderModule(i);
+      menu.appendChild(b);
+    });
+    renderModule(0);
+
+    document.getElementById("menu").onclick=()=>document.getElementById("nav").classList.toggle("open");
+    document.querySelectorAll(".navlinks a").forEach(a=>a.onclick=()=>document.getElementById("nav").classList.remove("open"));
+
+    const observer=new IntersectionObserver(entries=>{
+      entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add("visible")});
+    },{threshold:.12});
+    document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+
+    window.addEventListener("scroll",()=>{
+      const h=document.documentElement.scrollHeight-window.innerHeight;
+      document.getElementById("progress").style.width=(window.scrollY/h*100)+"%";
+    });
+    document.getElementById("year").textContent=new Date().getFullYear();
+  </script>
+</body>
+</html>
